@@ -21,9 +21,10 @@ bld/
 [Oo]bj/
 [Ll]og/
 
-# Visual Studio Code directories
+# Visual Studio Code
 .vscode/
 .vs/
+.DS_Store
 
 # NUNIT
 *.VisualState.xml

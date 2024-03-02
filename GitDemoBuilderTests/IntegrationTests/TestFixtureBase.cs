@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using GitDemo.GitBuilder;
+﻿using GitDemo.GitBuilder;
 using NodaTime;
-using NUnit.Framework;
 
 namespace GitDemo.UnitTests.IntegrationTests
 {

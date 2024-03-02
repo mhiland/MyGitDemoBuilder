@@ -1,6 +1,5 @@
 ﻿using GitDemo.GitBuilder;
 using NodaTime;
-using NUnit.Framework;
 
 namespace GitDemo.UnitTests
 {

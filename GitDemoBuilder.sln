@@ -1,9 +1,11 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2002
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GitDemo", "GitDemo\GitDemo.csproj", "{89D6DB09-F4DE-441F-9132-44F3C56DD4F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GitDemoBuilder", "GitDemoBuilder\GitDemoBuilder.csproj", "{89D6DB09-F4DE-441F-9132-44F3C56DD4F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitDemoBuilder.Tests", "GitDemoBuilderTests\GitDemoBuilder.Tests.csproj", "{2AC0B73F-FA89-4B34-B69F-4CA7CD79B97E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{89D6DB09-F4DE-441F-9132-44F3C56DD4F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89D6DB09-F4DE-441F-9132-44F3C56DD4F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89D6DB09-F4DE-441F-9132-44F3C56DD4F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AC0B73F-FA89-4B34-B69F-4CA7CD79B97E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AC0B73F-FA89-4B34-B69F-4CA7CD79B97E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AC0B73F-FA89-4B34-B69F-4CA7CD79B97E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AC0B73F-FA89-4B34-B69F-4CA7CD79B97E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using NodaTime;
-using NUnit.Framework;
+﻿using NodaTime;
 
 namespace GitDemo.UnitTests
 {

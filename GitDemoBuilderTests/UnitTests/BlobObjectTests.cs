@@ -1,5 +1,4 @@
 ﻿using GitDemo.DTO;
-using NUnit.Framework;
 
 namespace GitDemo.UnitTests
 {

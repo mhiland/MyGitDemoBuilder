@@ -4,9 +4,9 @@
     <OutputType>Exe</OutputType>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AssemblyTitle>GitDemo</AssemblyTitle>
-    <Copyright>Copyright ©  2018</Copyright>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>
+    <Copyright>Copyright ©  2024</Copyright>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
@@ -18,7 +18,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NodaTime" Version="2.2.5" />
-    <PackageReference Include="NUnit" Version="3.10.1" />
     <PackageReference Include="zlib.net" Version="1.0.4.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
   </ItemGroup>
