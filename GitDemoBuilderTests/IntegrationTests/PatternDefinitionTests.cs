@@ -35,7 +35,7 @@ namespace GitDemo.UnitTests.IntegrationTests
         [Test]
         public void Setup_DefinitionArray_HasRightSize()
         {
-            Assert.AreEqual(_expectedGrid, ActualGrid);
+            Assert.That(ActualGrid, Is.EqualTo(_expectedGrid));
         }
 
         [Test]
@@ -51,7 +51,7 @@ namespace GitDemo.UnitTests.IntegrationTests
                 actualFirstRow.Append(actualGridFullSize[row,j]);
             }
 
-            Assert.AreEqual(expectedFirstRow, actualFirstRow.ToString());
+            Assert.That(actualFirstRow.ToString(), Is.EqualTo(expectedFirstRow));
         }
     }
 }
