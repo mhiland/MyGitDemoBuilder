@@ -26,17 +26,14 @@ namespace GitDemo
 
         private static char[,] GetPatternFromDefinitionFile(FileInfo patternFile)
         {
-            var dataDefinition = new DataDefinition();
-            dataDefinition.ExtractGridFromFile(patternFile);
-            var fullPattern = dataDefinition.ExpandExampleGridToFullSize();
-            return fullPattern;
+            var dataDefinition = new DataDefinition(patternFile);
+            return dataDefinition.ExpandExampleGridToFullSize();
         }
 
         private static List<Instant> GetDatesFromPattern(char[,] fullGrid)
         {
             var dateComposer = new DateComposer();
-            var dateList = dateComposer.GetDateFromPattern(fullGrid);
-            return dateList;
+            return dateComposer.GetDateFromPattern(fullGrid);
         }
     }
 }

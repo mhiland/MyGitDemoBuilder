@@ -6,59 +6,66 @@ namespace GitDemo
 {
     public class DataDefinition
     {
-        private const int DefinitionRows = 7;
-        private readonly int DefinitionColumns;
-        private readonly int MaxNumberOfColumns;
+        private const int NumberOfRowsInPattern = 7;
+        private readonly int NumberOfColumnsInPattern;
         private readonly char[,] _grid;
 
-        public DataDefinition()
+        public DataDefinition(FileInfo fileInfo)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-
-            IConfigurationRoot configuration = builder.Build();
-            var t = configuration["AppSettings:PartialPatternSize"];
-
-            DefinitionColumns = int.Parse(configuration["AppSettings:PartialPatternSize"]);
-            MaxNumberOfColumns = int.Parse(configuration["AppSettings:FullPatternSize"]);
-
-            _grid = new char[DefinitionRows, DefinitionColumns];
-        }
-
-        public char[,] ExtractGridFromFile(FileInfo file)
-        {
-            if (!file.Exists)
+            if (!fileInfo.Exists)
             {
                 throw new Exception("Pattern definition does not exist");
             }
 
-            var i = 0;
+            string[] rows = File.ReadAllLines(fileInfo.FullName);
 
-            using (var sr = file.OpenText())
+            // Check for 7 rows
+            if (rows.Length != NumberOfRowsInPattern)
             {
-                string row;
-                while ((row = sr.ReadLine()) != null)
+                throw new Exception($"The file must contain exactly {NumberOfRowsInPattern} rows.");
+            }
+
+            // Check that all rows are of equal length
+            NumberOfColumnsInPattern = rows[0].Length;
+            foreach (string row in rows)
+            {
+                if (row.Length != NumberOfColumnsInPattern)
                 {
-                    for (var j = 0; j < row.Length; j++)
-                    {
-                        _grid[i, j] = row[j];
-                    }
-                    i++;
+                    throw new Exception("All rows must be of equal length.");
                 }
             }
 
+            // Create a char[,] array from the file contents
+            _grid = new char[NumberOfRowsInPattern, NumberOfColumnsInPattern];
+            for (int i = 0; i < NumberOfRowsInPattern; i++)
+            {
+                for (int j = 0; j < NumberOfColumnsInPattern; j++)
+                {
+                    _grid[i, j] = rows[i][j];
+                }
+            }
+        }
+
+        public char[,] ExtractGridFromFile()
+        {
             return _grid;
         }
 
         public char[,] ExpandExampleGridToFullSize()
         {
-            var fullGrid = new char[DefinitionRows, MaxNumberOfColumns];
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .Build();
+
+            var MaxNumberOfColumns = int.Parse(configuration["AppSettings:FullPatternSize"]);
+
+            var fullGrid = new char[NumberOfRowsInPattern, MaxNumberOfColumns];
 
             for (var y = 0; y < MaxNumberOfColumns ; y++)
             {
-                var ptr = y % DefinitionColumns;
-                for (var x = 0; x < DefinitionRows; x++)
+                var ptr = y % NumberOfColumnsInPattern;
+                for (var x = 0; x < NumberOfRowsInPattern; x++)
                 {
                     fullGrid[x,y] = _grid[x,ptr];
                 }

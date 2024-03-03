@@ -13,8 +13,8 @@ namespace GitDemo.UnitTests.IntegrationTests
         [OneTimeSetUp]
         public void Setup()
         {
-            DataDefinition = new DataDefinition();
-            ActualGrid = DataDefinition.ExtractGridFromFile(_fileInfo);
+            DataDefinition = new DataDefinition(_fileInfo);
+            ActualGrid = DataDefinition.ExtractGridFromFile();
 
             var rows = new string[7];
             rows[0] = "0440000440";
