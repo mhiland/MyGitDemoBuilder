@@ -46,12 +46,22 @@ namespace GitDemo.UnitTests.IntegrationTests
 
             var actualGridFullSize = DataDefinition.ExpandExampleGridToFullSize();
             var actualFirstRow = new StringBuilder();
-            for (var j = 0; j < 50; j++)
+            var period = DataDefinition.GetExtendedPeriod();
+            for (var j = 0; j < period; j++)
             {
                 actualFirstRow.Append(actualGridFullSize[row,j]);
             }
 
             Assert.That(actualFirstRow.ToString(), Is.EqualTo(expectedFirstRow));
+        }
+
+        [Test]
+        public void Should_HaveCorrectNodaStartTime()
+        {
+            var expectedValue = 50;
+            var period = DataDefinition.GetExtendedPeriod();
+
+            Assert.That(expectedValue, Is.EqualTo(period));
         }
     }
 }

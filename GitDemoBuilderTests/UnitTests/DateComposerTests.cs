@@ -5,14 +5,14 @@ namespace GitDemo.UnitTests
     public class DateComposerTests
     {
         private DateComposer _dateComposer;
-        private Instant Now { get; set; }  
+        private Instant StartDate { get; set; }  
         private char[,] ExpectedGrid { get; set; }
 
         [OneTimeSetUp]
         public void Setup()
         {
-            Now = Instant.FromUtc(2012, 3, 7, 12, 0);
-            _dateComposer = new DateComposer(Now);
+            StartDate = Instant.FromUtc(2012, 3, 7, 12, 0);
+            _dateComposer = new DateComposer(StartDate);
 
             var rows = new string[1];
             rows[0] = "0100000010";
@@ -30,13 +30,22 @@ namespace GitDemo.UnitTests
         {
             var expectedDates = new List<Instant>
                 {
-                    Instant.FromUtc(2011, 3, 15, 12, 0),
-                    Instant.FromUtc(2011, 5, 3, 12, 0)
+                    Instant.FromUtc(2012, 3, 14, 12, 0),
+                    Instant.FromUtc(2012, 5, 2, 12, 0)
                 };
 
             var actualDates = _dateComposer.GetDateFromPattern(ExpectedGrid);
 
             Assert.That(actualDates, Is.EqualTo(expectedDates));
+        }
+
+        [Test]
+        public void Should_HaveCorrectNodaStartTime()
+        {
+            var expectedValue = Instant.FromUtc(2012, 3, 7, 12, 0);
+            var dateComposer = new DateComposer();
+
+            Assert.That(expectedValue, Is.EqualTo(dateComposer.StartDate));
         }
     }
 }

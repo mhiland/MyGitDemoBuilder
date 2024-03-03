@@ -1,4 +1,6 @@
 using Microsoft.Extensions.Configuration;
+using NodaTime;
+using NodaTime.Text;
 
 namespace GitDemo.UnitTests.IntegrationTests
 {
@@ -17,11 +19,21 @@ namespace GitDemo.UnitTests.IntegrationTests
         }
 
         [Test]
-        public void Should_HaveCorrectConnectionString()
+        public void Should_HaveCorrectUserEmailSetting()
         {
             var expectedValue = "FirstName.LastName@email.com";
 
             Assert.That(expectedValue, Is.EqualTo(_configuration["AppSettings:GitUserEmail"]));
+        }
+
+        [Test]
+        public void Should_HaveCorrectNodaTime()
+        {
+            var expectedValue = Instant.FromUtc(2012, 3, 7, 12, 0);;
+            var startTimeString = _configuration["AppSettings:StartInstant"];
+            var startTimeInstant = InstantPattern.General.Parse(startTimeString).Value;
+
+            Assert.That(expectedValue, Is.EqualTo(startTimeInstant));
         }
     }
 }

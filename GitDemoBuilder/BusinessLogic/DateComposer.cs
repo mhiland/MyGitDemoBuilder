@@ -1,24 +1,30 @@
 ﻿using System.Collections.Generic;
+using System.IO;
+using Microsoft.Extensions.Configuration;
 using NodaTime;
+using NodaTime.Text;
 
 namespace GitDemo
 {
     public class DateComposer
     {
         private readonly List<Instant> _patternDates = new List<Instant>();
-        private Instant StartDate { get; }
+        public Instant StartDate { get; }
 
         public DateComposer()
         {
-            var now = SystemClock.Instance.GetCurrentInstant();
-            var duration = Duration.FromDays(365);
-            StartDate = now.Plus(-duration);
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .Build();
+
+            var startTimeString = configuration["AppSettings:StartInstant"];
+            StartDate = InstantPattern.General.Parse(startTimeString).Value;
         }
 
         public DateComposer(Instant now)
         {
-            var duration = Duration.FromDays(365);
-            StartDate = now.Plus(-duration);
+            StartDate = now;
         }
 
         public List<Instant> GetDateFromPattern(char[,] pattern)

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using Microsoft.Extensions.Configuration;
+using NodaTime;
+using NodaTime.Text;
 
 namespace GitDemo
 {
@@ -53,25 +55,41 @@ namespace GitDemo
 
         public char[,] ExpandExampleGridToFullSize()
         {
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .Build();
-
-            var MaxNumberOfColumns = int.Parse(configuration["AppSettings:FullPatternSize"]);
+            int MaxNumberOfColumns = GetExtendedPeriod();
 
             var fullGrid = new char[NumberOfRowsInPattern, MaxNumberOfColumns];
 
-            for (var y = 0; y < MaxNumberOfColumns ; y++)
+            for (var y = 0; y < MaxNumberOfColumns; y++)
             {
                 var ptr = y % NumberOfColumnsInPattern;
                 for (var x = 0; x < NumberOfRowsInPattern; x++)
                 {
-                    fullGrid[x,y] = _grid[x,ptr];
+                    fullGrid[x, y] = _grid[x, ptr];
                 }
             }
 
             return fullGrid;
+        }
+
+        public static int GetExtendedPeriod()
+        {
+            var configuration = new ConfigurationBuilder()
+                            .SetBasePath(Directory.GetCurrentDirectory())
+                            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                            .Build();
+
+            var startDateString = configuration["AppSettings:StartInstant"];
+            var startDateInstant = InstantPattern.General.Parse(startDateString).Value;
+
+            var endDateString = configuration["AppSettings:EndInstant"];
+            var endDateInstant = InstantPattern.General.Parse(endDateString).Value;
+
+            DateTimeZone zone = DateTimeZone.Utc;
+            LocalDate localDate1 = startDateInstant.InZone(zone).Date;
+            LocalDate localDate2 = endDateInstant.InZone(zone).Date;
+
+            Period period = Period.Between(localDate1, localDate2, PeriodUnits.Weeks);
+            return period.Weeks;
         }
     }
 }
