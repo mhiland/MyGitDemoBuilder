@@ -24,8 +24,8 @@ namespace GitDemo.UnitTests
 
             var gitLogHead = GitCommitBuilder.GetGitHead();
 
-            Assert.That(zeroedSha, Is.EqualTo(gitLogHead[0].PreviousCommit));
-            Assert.That("commit (initial): Commit 0", Is.EqualTo(gitLogHead[0].CommitMessage));
+            Assert.That(gitLogHead[0].PreviousCommit, Is.EqualTo(zeroedSha));
+            Assert.That(gitLogHead[0].CommitMessage, Is.EqualTo("commit (initial): Commit 0"));
             Assert.That(gitLogHead[0].TimeStamp, Is.EqualTo(expectedTimeStamp));
         }
 

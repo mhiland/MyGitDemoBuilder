@@ -1,5 +1,5 @@
-﻿using System.Configuration;
-using System.IO;
+﻿using System.IO;
+using Microsoft.Extensions.Configuration;
 
 namespace GitDemo
 {
@@ -7,11 +7,17 @@ namespace GitDemo
     {
         public static void Main(string[] args)
         {
-            var userEmail = ConfigurationManager.AppSettings.Get("GitUserEmail");
-            var userName = ConfigurationManager.AppSettings.Get("GitUserName");
-            var gitDirectoryPath = ConfigurationManager.AppSettings.Get("GitDirectory");
-            var patternFilename = ConfigurationManager.AppSettings.Get("PatternDefinition");
-            var patternFile = new FileInfo($"PatternDefinitions\\{patternFilename}");
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+            IConfigurationRoot configuration = builder.Build();
+
+            var userEmail = configuration["AppSettings:GitUserEmail"];
+            var userName = configuration["AppSettings:GitUserName"];
+            var gitDirectoryPath = configuration["AppSettings:GitDirectory"];
+            var patternFilename = configuration["AppSettings:PatternDefinition"];
+            var patternFile = new FileInfo(Path.Combine("PatternDefinitions", patternFilename));
             var gitDirectoryInfo = new DirectoryInfo(gitDirectoryPath);
 
             CreatePatternBasedGitHistory.Run(patternFile, gitDirectoryInfo, userName, userEmail);

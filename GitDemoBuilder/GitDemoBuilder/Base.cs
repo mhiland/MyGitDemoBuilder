@@ -9,10 +9,10 @@ namespace GitDemo.GitBuilder
     public class Base
     {
         public DirectoryInfo GitFolderInfo { get; set; }
-        public const string LogsHeadFile = @".git\logs\HEAD";
-        public const string LogsMasterFile = @".git\logs\refs\heads\master";
-        public const string RefsMasterFile = @".git\refs\heads\master";
-        public const string ObjectsFolder = @".git\objects";
+        public string LogsHeadFile = Path.Combine(".git", "logs", "HEAD");
+        public string LogsMasterFile = Path.Combine(".git", "logs", "refs", "heads", "master");
+        public string RefsMasterFile = Path.Combine(".git", "refs", "heads", "master");
+        public string ObjectsFolder = Path.Combine(".git", "objects");
         public const string ExampleFileName = "exampleFile.txt";
         
         public List<Instant> CommitDates { get; set; }

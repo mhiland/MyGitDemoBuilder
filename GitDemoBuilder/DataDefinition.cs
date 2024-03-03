@@ -1,15 +1,30 @@
 ﻿using System;
-using System.Configuration;
 using System.IO;
+using Microsoft.Extensions.Configuration;
 
 namespace GitDemo
-{ 
+{
     public class DataDefinition
     {
         private const int DefinitionRows = 7;
-        private static readonly int DefinitionColumns = int.Parse(ConfigurationManager.AppSettings.Get("PartialPatternSize"));
-        private static readonly int MaxNumberOfColumns = int.Parse(ConfigurationManager.AppSettings.Get("FullPatternSize"));
-        private readonly char[,] _grid = new char[DefinitionRows, DefinitionColumns];
+        private readonly int DefinitionColumns;
+        private readonly int MaxNumberOfColumns;
+        private readonly char[,] _grid;
+
+        public DataDefinition()
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+            IConfigurationRoot configuration = builder.Build();
+            var t = configuration["AppSettings:PartialPatternSize"];
+
+            DefinitionColumns = int.Parse(configuration["AppSettings:PartialPatternSize"]);
+            MaxNumberOfColumns = int.Parse(configuration["AppSettings:FullPatternSize"]);
+
+            _grid = new char[DefinitionRows, DefinitionColumns];
+        }
 
         public char[,] ExtractGridFromFile(FileInfo file)
         {

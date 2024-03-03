@@ -19,7 +19,11 @@ namespace GitDemo.UnitTests.IntegrationTests
 
             CreateTestDates();
 
-            CreatePatternInGitRepo(GitDirectory.Parent, PublishDates, UserName, UserEmail);
+            var parentDirectory = GitDirectory.Parent;
+            if (parentDirectory != null)
+            {
+                CreatePatternInGitRepo(parentDirectory, PublishDates, UserName, UserEmail);
+            }
         }
 
         [OneTimeTearDown]

@@ -4,7 +4,7 @@ namespace GitDemo.UnitTests.IntegrationTests
 {
     public class PatternDefinitionTests
     {
-        private readonly FileInfo _fileInfo = new FileInfo($"{TestContext.CurrentContext.TestDirectory}\\PatternDefinitions\\m.txt");
+        private readonly FileInfo _fileInfo = new FileInfo(Path.Combine(TestContext.CurrentContext.TestDirectory, "../../../../", "GitDemoBuilder", "PatternDefinitions", "m.txt"));
 
         private readonly char[,] _expectedGrid = new char[7, 10];
         private DataDefinition DataDefinition { get; set; }

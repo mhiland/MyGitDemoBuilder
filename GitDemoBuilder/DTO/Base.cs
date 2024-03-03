@@ -28,8 +28,8 @@ namespace GitDemo.DTO
 
         public void WriteFile(string objectDirectory)
         {
-            var folder = $@"{objectDirectory}\{FolderName}";
-            var filePath = new FileInfo($@"{folder}\{FileName}");
+            var folder = Path.Combine(objectDirectory, FolderName);
+            var filePath = new FileInfo(Path.Combine(folder, FileName));
 
             Directory.CreateDirectory(folder);
 

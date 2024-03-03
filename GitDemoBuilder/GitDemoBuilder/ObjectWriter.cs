@@ -10,7 +10,7 @@ namespace GitDemo.GitBuilder
 
         public void WriteGitDirectory()
         {
-            ObjectsFolderInfo = new DirectoryInfo($@"{GitFolderInfo.FullName}\{ObjectsFolder}");
+            ObjectsFolderInfo = new DirectoryInfo(Path.Combine(GitFolderInfo.FullName, ObjectsFolder));
 
             if (ObjectsFolderInfo.Exists)
             {
@@ -32,7 +32,7 @@ namespace GitDemo.GitBuilder
 
         private void WriteLogHeadFile()
         {
-            var fileInfo = new FileInfo($@"{GitFolderInfo.FullName}\{LogsHeadFile}");
+            var fileInfo = new FileInfo(Path.Combine(GitFolderInfo.FullName, LogsHeadFile));
             WriteGitLog(fileInfo);
         }
 
@@ -52,13 +52,13 @@ namespace GitDemo.GitBuilder
 
         private void WriteRefMaster()
         {
-            var fileInfo = new FileInfo($@"{GitFolderInfo.FullName}\{LogsMasterFile}");
+            var fileInfo = new FileInfo(Path.Combine(GitFolderInfo.FullName, LogsMasterFile));
             WriteGitLog(fileInfo);
         }
 
         private void WriteLogMaster()
         {
-            var filePath = new FileInfo($@"{GitFolderInfo.FullName}\{RefsMasterFile}");
+            var filePath = new FileInfo(Path.Combine(GitFolderInfo.FullName, RefsMasterFile));
 
             if (filePath.Directory != null && !filePath.Directory.Exists)
                 Directory.CreateDirectory(filePath.Directory.FullName);
