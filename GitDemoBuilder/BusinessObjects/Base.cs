@@ -34,8 +34,8 @@ namespace GitDemo.DTO
             Directory.CreateDirectory(folder);
 
             var compression = new Compression();
-            var compressedFileContents = compression.Compress(CommitFileContents);
-            compression.WriteOut(filePath, compressedFileContents);
+            var compressedFileContents = Compression.Compress(CommitFileContents);
+            Compression.WriteOut(filePath, compressedFileContents);
         }
 
         protected static string GetStringFromHash(byte[] hash)

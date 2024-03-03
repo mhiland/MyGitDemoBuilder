@@ -7,14 +7,14 @@ namespace GitDemo
 {
     public class Compression
     {
-        public byte[] Compress(string data)
+        public static byte[] Compress(string data)
         {
             var bytes = Encoding.UTF8.GetBytes(data);
             CompressData(bytes, out var outData);
             return outData;
         }
 
-        public void WriteOut(FileInfo fileInfo, byte[] data)
+        public static void WriteOut(FileInfo fileInfo, byte[] data)
         {
             if (!Directory.Exists(fileInfo.DirectoryName))
                 Directory.CreateDirectory(fileInfo.DirectoryName ?? throw new InvalidOperationException());
@@ -22,7 +22,7 @@ namespace GitDemo
             File.WriteAllBytes(fileInfo.FullName, data);
         }
 
-        public string Decompress(FileInfo fileInfo)
+        public static string Decompress(FileInfo fileInfo)
         {
             DecompressData(File.ReadAllBytes(fileInfo.FullName), out var outData);
             return Encoding.UTF8.GetString(outData);
