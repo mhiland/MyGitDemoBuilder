@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System;
 using System.IO;
 using GitDemo.DTO;
 
@@ -10,8 +11,9 @@ namespace GitDemo.GitBuilder
 
         public void WriteGitDirectory()
         {
-            ObjectsFolderInfo = new DirectoryInfo($@"{GitFolderInfo.FullName}\{ObjectsFolder}");
+            ObjectsFolderInfo = new DirectoryInfo(Path.Combine(GitFolderInfo.FullName, ObjectsFolder));
 
+            Console.WriteLine($"Setting up directory: {ObjectsFolderInfo.FullName}");
             if (ObjectsFolderInfo.Exists)
             {
                 ObjectsFolderInfo.Delete(true);
@@ -32,7 +34,7 @@ namespace GitDemo.GitBuilder
 
         private void WriteLogHeadFile()
         {
-            var fileInfo = new FileInfo($@"{GitFolderInfo.FullName}\{LogsHeadFile}");
+            var fileInfo = new FileInfo(Path.Combine(GitFolderInfo.FullName, LogsHeadFile));
             WriteGitLog(fileInfo);
         }
 
@@ -40,6 +42,8 @@ namespace GitDemo.GitBuilder
         {
             if (fileInfo.Directory != null && !fileInfo.Directory.Exists)
                 Directory.CreateDirectory(fileInfo.Directory.FullName);
+
+            Console.WriteLine($"Writing file: {fileInfo.FullName}");   
 
             using (var sw = fileInfo.CreateText())
             {
@@ -52,13 +56,13 @@ namespace GitDemo.GitBuilder
 
         private void WriteRefMaster()
         {
-            var fileInfo = new FileInfo($@"{GitFolderInfo.FullName}\{LogsMasterFile}");
+            var fileInfo = new FileInfo(Path.Combine(GitFolderInfo.FullName, LogsMasterFile));
             WriteGitLog(fileInfo);
         }
 
         private void WriteLogMaster()
         {
-            var filePath = new FileInfo($@"{GitFolderInfo.FullName}\{RefsMasterFile}");
+            var filePath = new FileInfo(Path.Combine(GitFolderInfo.FullName, RefsMasterFile));
 
             if (filePath.Directory != null && !filePath.Directory.Exists)
                 Directory.CreateDirectory(filePath.Directory.FullName);
