@@ -69,7 +69,7 @@ namespace GitDemo.GitBuilder
 
             using (var sw = filePath.CreateText())
             {
-                 sw.WriteLine(PreviousCommit);
+                sw.WriteLine(PreviousCommit);
             }
         }
 

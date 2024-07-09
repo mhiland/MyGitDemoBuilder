@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -34,7 +33,7 @@ namespace GitDemo.DTO
 
             Directory.CreateDirectory(folder);
 
-            var compression = new Compression();
+            var compression = new ZCompression();
             var compressedFileContents = compression.Compress(CommitFileContents);
             compression.WriteOut(filePath, compressedFileContents);
         }

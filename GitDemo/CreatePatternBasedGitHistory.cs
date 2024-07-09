@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System;
 using GitDemo.GitBuilder;
 using NodaTime;
 
@@ -13,18 +12,7 @@ namespace GitDemo
             var fullPattern = GetPatternFromDefinitionFile(patternFile);
 
             var gitHistory = GetDatesFromPattern(fullPattern);
-
-            Console.WriteLine($"Initialize git directory: {gitDirectory}");
-            // Delete the folder if it exists
-            if (Directory.Exists(gitDirectory.FullName))
-            {
-                Directory.Delete(gitDirectory.FullName, true);
-                Console.WriteLine(" git folder deleted.");
-            }
-
-            // Recreate the folder
-            Directory.CreateDirectory(gitDirectory.FullName);
-            Console.WriteLine(" git folder created.");
+            new GitDirectory(gitDirectory);
 
             CreatePatternInGitRepo(gitDirectory, gitHistory, gitUserName, gitUserEmail);
         }

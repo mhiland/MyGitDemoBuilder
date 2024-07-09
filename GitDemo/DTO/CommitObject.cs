@@ -11,10 +11,10 @@
         public override string GetFileContent()
         {
             var str = $"tree {Tree}\n" +
-                   AddParent() +
-                   $"author {Author.UserName} <{Author.UserEmail}> {Author.TimeStamp}\n" +
-                   $"committer {Author.UserName} <{Author.UserEmail}> {Author.TimeStamp}\n\n" +
-                   $"{CommitMessage}\n";
+                AddParent() +
+                $"author {Author.UserName} <{Author.UserEmail}> {Author.TimeStamp}\n" +
+                $"committer {Author.UserName} <{Author.UserEmail}> {Author.TimeStamp}\n\n" +
+                $"{CommitMessage}\n";
 
             return $"commit {str.Length}\0{str}";
         }
