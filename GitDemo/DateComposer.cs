@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections.Generic;
 using NodaTime;
+using NodaTime.Text;
 
 namespace GitDemo
 {
@@ -7,18 +10,35 @@ namespace GitDemo
     {
         private readonly List<Instant> _patternDates = new List<Instant>();
         private Instant StartDate { get; }
+        private static IConfiguration _configuration;
 
         public DateComposer()
         {
-            var now = SystemClock.Instance.GetCurrentInstant();
-            var duration = Duration.FromDays(365);
-            StartDate = now.Plus(-duration);
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                .AddJsonFile("appsettings.json");
+
+            _configuration = builder.Build();
+
+            var startDateValue = _configuration["AppSettings:StartDate"];
+
+            StartDate = ConvertToInstant(startDateValue);
         }
 
-        public DateComposer(Instant now)
+        private static Instant ConvertToInstant(string dateTimeString)
         {
-            var duration = Duration.FromDays(365);
-            StartDate = now.Plus(-duration);
+            var pattern = InstantPattern.ExtendedIso;
+
+            var parseResult = pattern.Parse(dateTimeString);
+
+            if (parseResult.Success)
+            {
+                return parseResult.Value;
+            }
+            else
+            {
+                throw new FormatException($"Invalid date-time string: {dateTimeString}");
+            }
         }
 
         public List<Instant> GetDateFromPattern(char[,] pattern)

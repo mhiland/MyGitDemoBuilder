@@ -14,5 +14,6 @@ App.config contains configuration settings for specifying git user, email and gi
 
 ## Build
 dotnet add package DotNetZip
+dotnet add package NodaTime
 dotnet build
 dotnet run
