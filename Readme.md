@@ -12,3 +12,7 @@ Patterns use a numeric value to specify number of commits per block (to make use
 ### Configuration
 App.config contains configuration settings for specifying git user, email and git directory.
 
+## Build
+dotnet add package DotNetZip
+dotnet build
+dotnet run
