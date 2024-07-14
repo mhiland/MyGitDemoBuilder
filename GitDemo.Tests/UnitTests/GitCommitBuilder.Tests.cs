@@ -25,9 +25,9 @@ namespace GitDemo.UnitTests
 
             var gitLogHead = GitCommitBuilder.GetGitHead();
 
-            Assert.AreEqual(gitLogHead[0].PreviousCommit, zeroedSha);
-            Assert.AreEqual(gitLogHead[0].CommitMessage, "commit (initial): Commit 0");
-            Assert.AreEqual(expectedTimeStamp, gitLogHead[0].TimeStamp);
+            Assert.That(gitLogHead[0].PreviousCommit, Is.EqualTo(zeroedSha));
+            Assert.That(gitLogHead[0].CommitMessage, Is.EqualTo("commit (initial): Commit 0"));
+            Assert.That(gitLogHead[0].TimeStamp, Is.EqualTo(expectedTimeStamp));
         }
 
         [Test]
@@ -39,7 +39,7 @@ namespace GitDemo.UnitTests
 
             var gitLogHead = GitCommitBuilder.GetGitHead();
 
-            Assert.AreEqual(gitLogHead[1].PreviousCommit, gitLogHead[0].CurrentCommit);
+            Assert.That(gitLogHead[0].CurrentCommit, Is.EqualTo(gitLogHead[1].PreviousCommit));
         }
     }
 }

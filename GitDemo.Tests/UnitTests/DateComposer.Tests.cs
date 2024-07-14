@@ -38,7 +38,7 @@ namespace GitDemo.UnitTests
 
             var actualDates = _dateComposer.GetDateFromPattern(ExpectedGrid);
 
-            Assert.AreEqual(expectedDates, actualDates);
+            Assert.That(actualDates, Is.EqualTo(expectedDates));
         }
     }
 }

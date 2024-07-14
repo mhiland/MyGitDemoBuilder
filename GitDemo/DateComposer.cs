@@ -25,6 +25,12 @@ namespace GitDemo
             StartDate = ConvertToInstant(startDateValue);
         }
 
+        public DateComposer(Instant now) //for unit tests
+        {
+            var duration = Duration.FromDays(365);
+            StartDate = now.Plus(-duration);
+        }
+
         private static Instant ConvertToInstant(string dateTimeString)
         {
             var pattern = InstantPattern.ExtendedIso;

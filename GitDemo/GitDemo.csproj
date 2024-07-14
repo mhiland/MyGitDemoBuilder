@@ -33,7 +33,6 @@
     <Compile Include="DTO\CommitObject.cs" />
     <Compile Include="DTO\GitLog.cs" />
     <Compile Include="DTO\User.cs" />
-    <Compile Include="DTO\ZCompression.cs" />
     <Compile Include="GitBuilder\Base.cs" />
     <Compile Include="GitBuilder\ObjectWriter.cs" />
     <Compile Include="GitBuilder\ObjectBuilder.cs" />

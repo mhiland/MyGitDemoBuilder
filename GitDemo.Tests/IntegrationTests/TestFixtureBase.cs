@@ -23,26 +23,21 @@ namespace GitDemo.UnitTests.IntegrationTests
 
             CreateTestDates();
 
-            CreatePatternInGitRepo(GitDirectory.Parent, PublishDates, UserName, UserEmail);
+            CreatePatternInGitRepo(GitDirectory, PublishDates, UserName, UserEmail);
         }
 
         [OneTimeTearDown]
         public void TearDown()
         {
-            GitDirectory.Parent?.Delete(true);
+            GitDirectory?.Delete(true);
         }
 
         private void CreateGitDirectory()
         {
-            var name = Path.Combine(Path.GetTempPath(), DirectoryName, ".git");
+            var name = Path.Combine(Path.GetTempPath(), DirectoryName);
             GitDirectory = new DirectoryInfo(name);
 
-            if (GitDirectory.Exists)
-            {
-                GitDirectory.Delete(true);
-            }
-
-            GitDirectory = Directory.CreateDirectory(name);
+            new GitDirectory(GitDirectory);
         }
 
         private static void CreateTestDates()

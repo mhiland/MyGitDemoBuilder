@@ -26,7 +26,7 @@ namespace GitDemo.UnitTests
         {
             const string expected = "E69DE29BB2D1D6434B8B29AE775AD8C2E48C5391";
 
-            Assert.AreEqual(expected, EmptyBlobObject.Hash);
+            Assert.That(EmptyBlobObject.Hash, Is.EqualTo(expected));
         }
 
         [Test]
@@ -34,7 +34,7 @@ namespace GitDemo.UnitTests
         {
             const string expected = "blob 0\0";
 
-            Assert.AreEqual(expected, EmptyBlobObject.GetFileContent());
+            Assert.That(EmptyBlobObject.GetFileContent(), Is.EqualTo(expected));
         }
 
         [Test]
@@ -43,14 +43,14 @@ namespace GitDemo.UnitTests
             const string expectedHash = "BC9F3DE89F680D2185A9E0CD316C29B2406DB8EF";
             const string expectedFileContent = "blob 14\0initial Commit";
 
-            var blogObject = new BlobObject()
+            var blobObject = new BlobObject()
             {
                 Content = "initial Commit"
             };
-            blogObject.SetHash();
+            blobObject.SetHash();
 
-            Assert.AreEqual(expectedFileContent, blogObject.GetFileContent());
-            Assert.AreEqual(expectedHash, blogObject.Hash);
+            Assert.That(blobObject.GetFileContent(), Is.EqualTo(expectedFileContent));
+            Assert.That(blobObject.Hash, Is.EqualTo(expectedHash));
         }
     }
 }

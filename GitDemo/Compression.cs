@@ -33,13 +33,25 @@ namespace GitDemo
 
         public static void CompressData(byte[] inData, out byte[] outData)
         {
-            using (var outMemoryStream = new MemoryStream())
+            using (var memoryStream = new MemoryStream())
             {
-                using (var gzipStream = new GZipStream(outMemoryStream, CompressionLevel.Optimal))
+                // Writing the ZLIB header
+                memoryStream.WriteByte(0x78); // CMF (Compression Method and flags)
+                memoryStream.WriteByte(0x9C); // FLG (Additional flags)
+
+                using (var deflateStream = new DeflateStream(memoryStream, CompressionMode.Compress, true))
                 {
-                    gzipStream.Write(inData, 0, inData.Length);
+                    deflateStream.Write(inData, 0, inData.Length);
                 }
-                outData = outMemoryStream.ToArray();
+
+                // Compute Adler-32 checksum and write it
+                uint adler32 = ComputeAdler32(inData);
+                memoryStream.WriteByte((byte)((adler32 >> 24) & 0xFF));
+                memoryStream.WriteByte((byte)((adler32 >> 16) & 0xFF));
+                memoryStream.WriteByte((byte)((adler32 >> 8) & 0xFF));
+                memoryStream.WriteByte((byte)(adler32 & 0xFF));
+
+                outData = memoryStream.ToArray();
             }
         }
 
@@ -48,12 +60,44 @@ namespace GitDemo
             using (var inMemoryStream = new MemoryStream(inData))
             using (var outMemoryStream = new MemoryStream())
             {
-                using (var gzipStream = new GZipStream(inMemoryStream, CompressionMode.Decompress))
+                // Skipping the ZLIB header (first two bytes)
+                inMemoryStream.ReadByte();
+                inMemoryStream.ReadByte();
+
+                using (var deflateStream = new DeflateStream(inMemoryStream, CompressionMode.Decompress))
                 {
-                    gzipStream.CopyTo(outMemoryStream);
+                    deflateStream.CopyTo(outMemoryStream);
                 }
+
+                // Verify Adler-32 checksum
                 outData = outMemoryStream.ToArray();
+                var computedAdler32 = ComputeAdler32(outData);
+                var storedAdler32 = (uint)(
+                    (inData[inData.Length - 4] << 24) |
+                    (inData[inData.Length - 3] << 16) |
+                    (inData[inData.Length - 2] << 8) |
+                    inData[inData.Length - 1]
+                );
+
+                if (computedAdler32 != storedAdler32)
+                {
+                    throw new InvalidDataException("Adler-32 checksum does not match.");
+                }
             }
+        }
+
+        private static uint ComputeAdler32(byte[] data)
+        {
+            const uint MOD_ADLER = 65521;
+            uint a = 1, b = 0;
+
+            foreach (byte bt in data)
+            {
+                a = (a + bt) % MOD_ADLER;
+                b = (b + a) % MOD_ADLER;
+            }
+
+            return (b << 16) | a;
         }
     }
 }

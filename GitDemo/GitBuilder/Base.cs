@@ -10,8 +10,8 @@ namespace GitDemo.GitBuilder
     {
         public DirectoryInfo GitFolderInfo { get; set; }
         public const string LogsHeadFile = @".git/logs/HEAD";
-        public const string LogsMasterFile = @".git/logs/refs/heads/master";
-        public const string RefsMasterFile = @".git/refs/heads/master";
+        public const string LogsMasterFile = @".git/logs/refs/heads/main";
+        public const string RefsMasterFile = @".git/refs/heads/main";
         public const string ObjectsFolder = @".git/objects";
         public const string ExampleFileName = "exampleFile.txt";
         

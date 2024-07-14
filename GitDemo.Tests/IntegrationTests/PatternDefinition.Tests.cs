@@ -6,7 +6,7 @@ namespace GitDemo.UnitTests.IntegrationTests
 {
     public class PatternDefinitionTests
     {
-        private readonly FileInfo _fileInfo = new FileInfo($"{TestContext.CurrentContext.TestDirectory}\\PatternDefinitions\\m.txt");
+        private FileInfo _fileInfo;
 
         private readonly char[,] _expectedGrid = new char[7, 10];
         private DataDefinition DataDefinition { get; set; }
@@ -15,6 +15,9 @@ namespace GitDemo.UnitTests.IntegrationTests
         [OneTimeSetUp]
         public void Setup()
         {
+            string patternFilePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "PatternDefinitions", "m.txt");
+            _fileInfo = new FileInfo(patternFilePath);
+
             DataDefinition = new DataDefinition();
             ActualGrid = DataDefinition.ExtractGridFromFile(_fileInfo);
 
@@ -37,23 +40,23 @@ namespace GitDemo.UnitTests.IntegrationTests
         [Test]
         public void Setup_DefinitionArray_HasRightSize()
         {
-            Assert.AreEqual(_expectedGrid, ActualGrid);
+            Assert.That(ActualGrid, Is.EqualTo(_expectedGrid));
         }
 
         [Test]
         public void Verify_ExpandedFirstRow_HasExpectedValue()
         {
             const int row = 0;
-            const string expectedFirstRow = "04400004400440000440044000044004400004400440000440";
+            const string expected = "04400004400440000440044000044004400004400440000440";
 
             var actualGridFullSize = DataDefinition.ExpandExampleGridToFullSize();
-            var actualFirstRow = new StringBuilder();
+            var actual = new StringBuilder();
             for (var j = 0; j < 50; j++)
             {
-                actualFirstRow.Append(actualGridFullSize[row,j]);
+                actual.Append(actualGridFullSize[row,j]);
             }
 
-            Assert.AreEqual(expectedFirstRow, actualFirstRow.ToString());
+            Assert.That(actual.ToString(), Is.EqualTo(expected));
         }
     }
 }

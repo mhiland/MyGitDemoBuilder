@@ -33,7 +33,7 @@ namespace GitDemo.DTO
 
             Directory.CreateDirectory(folder);
 
-            var compression = new ZCompression();
+            var compression = new Compression();
             var compressedFileContents = compression.Compress(CommitFileContents);
             compression.WriteOut(filePath, compressedFileContents);
         }
